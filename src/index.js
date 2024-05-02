@@ -35,36 +35,45 @@ function init3D() {
     // Draco loader
     const dracoLoader = new DRACOLoader()
     const devpath = ('')
-    dracoLoader.setDecoderPath('http://localhost:3000/draco/')
+    dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/gh/CilliersWebSolutions/draco@main/draco/')
 
     // GLTF loader
     const gltfLoader = new GLTFLoader()
     gltfLoader.setDRACOLoader(dracoLoader)
 
-    const bakedTexture = textureLoader.load('https://uploads-ssl.webflow.com/661bd3640db9efe63984e8eb/662d5bf6ac9bfbdb074d4d8e_baked.jpg')
-    bakedTexture.flipY = false
 
-    bakedTexture.colorSpace = THREE.SRGBColorSpace
+
+    const bakedTextureMini = textureLoader.load('https://uploads-ssl.webflow.com/661bd3640db9efe63984e8eb/662d5bf6ac9bfbdb074d4d8e_baked.jpg')
+
+    bakedTextureMini.flipY = false
+    bakedTextureMini.colorSpace = THREE.SRGBColorSpace
+
+    const bakedTextureBuilding = textureLoader.load('https://uploads-ssl.webflow.com/661bd3640db9efe63984e8eb/663395f3eb775143e82a5b7c_Building-bakedNew.jpg')
+
+    bakedTextureMini.flipY = false
+    bakedTextureMini.colorSpace = THREE.SRGBColorSpace
 
     /**
      * Materials
      */
     //Baked material
-    const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
+    const bakedMaterialMini = new THREE.MeshBasicMaterial({ map: bakedTextureMini })
+    const bakedMaterialbuilding = new THREE.MeshBasicMaterial({ map: bakedTextureBuilding })
     //const bakedMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 
     // Pole Light material
     // const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
-    console.log(bakedMaterial)
+    //console.log(bakedMaterial)
     /**
      *  Model
      */
 
     gltfLoader.load(
-      'https://uploads-ssl.webflow.com/661bd3640db9efe63984e8eb/6630d29ad5e75f402417b4ee_vendingCorp_bakedDraco.glb.txt',
+      'https://uploads-ssl.webflow.com/661bd3640db9efe63984e8eb/66339c687ad0650bbc8b4842_vendcorpTestDraco.glb.txt',
       (gltf) => {
         console.log(gltf)
-        const bakedMesh = gltf.scene.children.find(child => child.name === 'vendingMachine_baked')
+        const bakedMeshMini = gltf.scene.children.find(child => child.name === 'vendingMachineMini_baked')
+        const bakedMeshBuilding = gltf.scene.children.find(child => child.name === 'vendingMachineBuilding_baked')
         // const bakedMeshR1 = gltf.scene.children.find(child => child.name === 'vendingMachine_firstRow vendingMachine_Row8')
         // const bakedMeshR2 = gltf.scene.children.find(child => child.name === 'vendingMachine_secondRow')
         // const bakedMeshR3 = gltf.scene.children.find(child => child.name === 'vendingMachine_thirdRow')
@@ -75,7 +84,8 @@ function init3D() {
         //const portalLightMesh = gltf.scene.children.find(child => child.name === 'portalLight')
 
 
-        bakedMesh.material = bakedMaterial
+        bakedMeshMini.material = bakedMaterialMini
+        bakedMeshBuilding.material = bakedMaterialbuilding
         //bakedMeshR1.material = bakedMaterial
         //bakedMeshR2.material = bakedMaterial
         //bakedMeshR3.material = bakedMaterial
